@@ -1,33 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import {FaStar} from "react-icons/fa";
 import reportWebVitals from './reportWebVitals';
 
-// Star rating system
-const createArray = (length) => [
-  ...Array(length)
-];
+// Using useEffect, runs after every component render and change
+function App() {
+  const [name, setName] = useState("Mburu");
 
-function Star({selected = false, onSelect}) {
+  // This fires everytime we change the component state, call useState()
+  // Passing in array means effect only fires once on first render
+  useEffect(() => {
+    document.title = `Celebrate ${name}`;
+  }, [name])
+
   return (
-    <FaStar color={selected ? "red" : "gray"} onClick={onSelect}/>
-  )
+    <section>
+     <p>Congratulations {name}</p>
+     <button onClick={() => setName("Michael")}>Change Winner</button>
+    </section>
+  );
 }
-
-function StarRating({totalStars = 5}) {
-  const [selectedStars, setSelectedStars] = useState(0)
-  return (
-    <>
-    {
-      createArray(totalStars).map((n, i) => (<Star key={i}  selected={selectedStars > i} onSelect={() => setSelectedStars(i + 1)}/>))};
-      <p>{selectedStars} of {totalStars}</p>
-    </>
-  )
-}
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StarRating  totalStars={4}/>
+    <App />
 );
 
 // If you want to start measuring performance in your app, pass a function
