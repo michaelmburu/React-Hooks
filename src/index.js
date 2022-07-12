@@ -2,12 +2,18 @@ import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 
-// Using useReducer
+// Using useReducer on a checkBox
 function App() {
-    const [number, setNumber] = useReducer((number, newNumber) => number + newNumber , 0)
-    return (
-      <h1 onClick={() => setNumber(1)}>{number}</h1>
+    const [checked, toggle] = useReducer(
+      (checked) => !checked,
+      false
     )
+      return (
+        <>
+          <input type="checkbox" value={checked} onChange={toggle} />
+          {checked ? "checked" : "not checked"}
+        </>
+      )
   }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
