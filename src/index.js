@@ -1,17 +1,36 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, {useReducer } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 
-// Using useReducer on a checkBox
+const initialState = {
+  message: "Hi"
+};
+
+function reducer(state, action) {
+  switch(action.type) {
+    case "yell":
+      return {
+        message: `HEY! I just said ${state.message}`
+      };
+    case "whisper":
+      return {
+        message: `excuse me`
+      };
+    default: 
+  }
+}
+
+// Using useReducer for complex state
 function App() {
-    const [checked, toggle] = useReducer(
-      (checked) => !checked,
-      false
+    const [state, dispatch] = useReducer(
+      reducer,
+      initialState
     )
       return (
         <>
-          <input type="checkbox" value={checked} onChange={toggle} />
-          {checked ? "checked" : "not checked"}
+         <p>Message : {state.message}</p>
+         <button onClick={() => dispatch({type: "yell"})}>YELL</button>
+         <button onClick={() => dispatch({type: "whisper"})}>Whisper</button>
         </>
       )
   }
