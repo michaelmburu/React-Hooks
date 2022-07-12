@@ -1,18 +1,21 @@
 import React from 'react';
-import { useTrees } from './';
+import { useFetch } from './userFetch';
 
-// use exported context.
-function App() {
-    const {trees} = useTrees()
-    return (
-      <div>
-        <h1>Trees I've Heard Of</h1>
-        <ul>
-            {trees.map(tree => (
-            <li key={tree.id}>{tree.type}</li>
-            ))}
-        </ul>
-      </div>
+
+// get data with custom hook
+function App({login}) {
+
+    const {loading, data, error} = useFetch(`https://api.github.com/users/${login}`);
+   if(loading) return <h1>Loading....</h1>
+   if(error) return <pre>{JSON.stringify(error, null, 2)}</pre>
+    return(
+        <div>
+            <img src={data.avatar_url} alt={data.login} height={200} />
+            <div>{data.login}</div>
+            <div>{data.name && <p>{data.name}</p>}</div>
+            <div>{data.location && <p>{data.location}</p>}</div>
+        </div>
+        
     )
 }
 
