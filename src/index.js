@@ -1,37 +1,27 @@
-import React, {useReducer } from 'react';
+import React, {useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 
-const initialState = {
-  message: "Hi"
-};
 
-function reducer(state, action) {
-  switch(action.type) {
-    case "yell":
-      return {
-        message: `HEY! I just said ${state.message}`
-      };
-    case "whisper":
-      return {
-        message: `excuse me`
-      };
-    default: 
-  }
-}
-
-// Using useReducer for complex state
+// Using useRef to get values from components
 function App() {
-    const [state, dispatch] = useReducer(
-      reducer,
-      initialState
-    )
+      const sound = useRef();
+      const color = useRef();
+
+      const submit = (e) => {
+        e.preventDefault();
+        const soundVal = sound.current.value;
+        const colorVal = color.current.value;
+        alert(`${soundVal} sounds like${colorVal} `)
+        sound.current.value = "";
+        color.current.value= "";
+      }
       return (
-        <>
-         <p>Message : {state.message}</p>
-         <button onClick={() => dispatch({type: "yell"})}>YELL</button>
-         <button onClick={() => dispatch({type: "whisper"})}>Whisper</button>
-        </>
+        <form onSubmit={submit}>
+          <input type="text" ref={sound} placeholder="Sound...." />
+          <input type="color" ref={color} />
+          <button>Add</button>
+        </form>
       )
   }
 const root = ReactDOM.createRoot(document.getElementById('root'));
