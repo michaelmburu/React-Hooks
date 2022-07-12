@@ -1,11 +1,13 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 
-// Using createContext provider hook
-export const TreesContext = createContext();
+// Using a custom hook with Context 
+const TreesContext = createContext();
+
+export const useTrees = () => useContext(TreesContext);
 
 // load data
 const trees = [

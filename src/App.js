@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
-import { TreesContext } from './';
+import React from 'react';
+import { useTrees } from './';
 
-// useCOntext to load a provider context and map the data to the input
+// use exported context.
 function App() {
-    const {trees} = useContext(TreesContext)
+    const {trees} = useTrees()
     return (
       <div>
         <h1>Trees I've Heard Of</h1>
