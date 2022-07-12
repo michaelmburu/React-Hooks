@@ -2,23 +2,37 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 
-// Using useEffect, runs after every component render and change
+// Using useEffect, github api
 function App() {
-  const [name, setName] = useState("Mburu");
 
-  // This fires everytime we change the component state, call useState()
-  // Passing in array means effect only fires once on first render
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    document.title = `Celebrate ${name}`;
-  }, [name])
+    loadData();
+  }, [])
 
-  return (
-    <section>
-     <p>Congratulations {name}</p>
-     <button onClick={() => setName("Michael")}>Change Winner</button>
-    </section>
-  );
-}
+  function loadData() {
+    fetch(`https:api.github.com/users`)
+    .then(res => res.json())
+    .then(setData)
+  }
+    
+      return (
+        data &&
+        <section>
+          <p>Github API</p>
+        
+            <ul>
+              {data.map(user => (
+                <li key={user.id}>{user.login}</li>
+              ))}
+            </ul>
+            <button onClick={() => setData([])}>Remove Data</button>
+            <p></p>
+            <button onClick={() => loadData()}>Add Data</button>
+        </section>
+    );
+  }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <App />
