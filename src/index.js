@@ -1,37 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 
-// Using useEffect, github api
+// Using useReducer
 function App() {
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    loadData();
-  }, [])
-
-  function loadData() {
-    fetch(`https:api.github.com/users`)
-    .then(res => res.json())
-    .then(setData)
-  }
-    
-      return (
-        data &&
-        <section>
-          <p>Github API</p>
-        
-            <ul>
-              {data.map(user => (
-                <li key={user.id}>{user.login}</li>
-              ))}
-            </ul>
-            <button onClick={() => setData([])}>Remove Data</button>
-            <p></p>
-            <button onClick={() => loadData()}>Add Data</button>
-        </section>
-    );
+    const [number, setNumber] = useReducer((number, newNumber) => number + newNumber , 0)
+    return (
+      <h1 onClick={() => setNumber(1)}>{number}</h1>
+    )
   }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
